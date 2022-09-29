@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
+git clone --depth=1 https://gitlab.com/Panchajanya1999/azure-clang.git clang-llvm
 git clone --depth=1 https://github.com/FammasMaz/AnyKernel3 AnyKernel
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(TZ=Asia/Karachi date +"%m-%d-%H-%M")
 START=$(TZ=Asia/Karachi date +"%s")
 KERNEL_DIR=$(pwd)
-PATH="${PWD}/clang/bin:$PATH"
+TC_DIR=$KERNEL_DIR/clang-llvm
+PATH=$TC_DIR/bin/:$PATH
 export KBUILD_COMPILER_STRING="$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=drone
